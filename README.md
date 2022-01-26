@@ -8,7 +8,7 @@ for supporting the desired system's requirements.
   and each destination handler only commits offsets after the
   successful processing of an event. after a restart/crash,
   consumers shall resume from the last commited offset. New consumer groups
-  shall reprocess the full event log
+  will reprocess the full event log.
 
 - **At-least-once delivery:** Kafka provices at-least-once guarantees
   as long as you you make sure that you don't commit offsets for
@@ -17,7 +17,7 @@ for supporting the desired system's requirements.
 - **Retry backoff and limit:** Since we care about ordering guarantees,
   there is no simple way to implement a retry mechanism using kafka's
   native constructs such as additional topics. This implementation uses an in-memory retry
-  mechanism during event polling with has the following side effects:
+  mechanism during event polling which has the following side effects:
 
   1. Retry counters will be reset upon rebalancing or process restart,
      so the implemented system offers at-least n-retry guarantees.
@@ -44,7 +44,7 @@ for supporting the desired system's requirements.
 
 2. Even with several partitions, you cannot achieve the performance
    levels obtained by per-key parallel processing which unfortunatelly
-   is not natively supported by kafka
+   is not natively supported by kafka.
 
 3. A single slow or failing message will block all messages behind the
    problematic message, ie. the entire partition. The process may recover,
@@ -55,13 +55,13 @@ Running E2E tests
 =================
 
 1. Run Kafka locally at `localhost:9092`
-2. Port `8080` should be available for the web server to successfully bind, also make sure that there is no local firewall setup to block access
+2. Port `8080` should be available for the web server to successfully bind, also make sure that there is no local firewall setup blocking access
 3. Run `go test -v ./e2e`
 
 Further Work
 ============
 
-The system's requirements will be better server if we can implement a Go version of [Confluent's Parallel Consumer](https://www.confluent.io/blog/introducing-confluent-parallel-message-processing-client/) which is written in [Java](https://github.com/confluentinc/parallel-consumer) and implements a client side queueing system on top of Apache Kafka consumer. The following features are especially attractive:
+The system's requirements would be better served if we implemented a Go version of [Confluent's Parallel Consumer](https://www.confluent.io/blog/introducing-confluent-parallel-message-processing-client/) which is written in [Java](https://github.com/confluentinc/parallel-consumer) and implements a client side queueing system on top of Apache Kafka consumer. The following features are especially attractive:
 
 1. We can have more parallelism than the topic's partition configuration supports
 2. We can use message level acknowledgment instead of partition level offsets, i.e. achieve per-key concurrent processing
