@@ -11,7 +11,7 @@ for supporting the desired system's requirements.
   will reprocess the full event log.
 
 - **At-least-once delivery:** Kafka provides at-least-once guarantees
-  as long as you you make sure that you don't commit offsets for
+  as long as you make sure that you don't commit offsets for
   unprocessed events.
 
 - **Retry backoff and limit:** Since we care about ordering guarantees,
