@@ -10,7 +10,7 @@ for supporting the desired system's requirements.
   consumers shall resume from the last commited offset. New consumer groups
   will reprocess the full event log.
 
-- **At-least-once delivery:** Kafka provices at-least-once guarantees
+- **At-least-once delivery:** Kafka provides at-least-once guarantees
   as long as you you make sure that you don't commit offsets for
   unprocessed events.
 
